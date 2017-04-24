@@ -1,9 +1,10 @@
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
+var room = require('room');
 
 module.exports.loop = function () {
-
+    room.renew(Game.creeps['London']);
     var tower = Game.getObjectById('f541c47cc7fd5b77b0d28aba');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
