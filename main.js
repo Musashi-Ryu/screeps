@@ -4,7 +4,8 @@ var roleBuilder = require('role.builder');
 var room = require('room');
 
 module.exports.loop = function () {
-    room.renew(Game.creeps['London']);
+    room.populate();
+    
     var tower = Game.getObjectById('f541c47cc7fd5b77b0d28aba');
     if(tower) {
         var closestDamagedStructure = tower.pos.findClosestByRange(FIND_STRUCTURES, {
