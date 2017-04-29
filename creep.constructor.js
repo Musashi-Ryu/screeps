@@ -28,7 +28,7 @@ CreepConstructor.prototype.act = function() {
 	if (!this.forceControllerUpgrade) {
 		site = this.constructionController.constructStructure(this);
 	}
-
+	
 	if (!site) {
 		var site = this.constructionController.getController();
 		this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});

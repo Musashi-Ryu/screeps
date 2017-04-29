@@ -21,15 +21,25 @@ CreepMiner.prototype.init = function() {
 		if (cnt != undefined) {
 		    this.remember('container', cnt.id);
 		}
+	} else {
+	    this.container = this.resourceController.getResourceById(this.remember('container'));
 	}
+	
+	if (this.remember('source') == undefined) {
+		var source = this.resourceController.getAvailableResource();
+		if (source != undefined) {
+		    this.remember('source', source.id);
+		}
+	} else {
+        this.resource = this.resourceController.getResourceById(this.remember('source'));
+	}
+	
 	if (!this.remember('srcRoom')) {
 		this.remember('srcRoom', this.creep.room.name);
 	}
 	if (this.moveToNewRoom() == true) {
 		return;
 	}
-
-	this.container = this.resourceController.getResourceById(this.remember('container'));
 
 	this.act();
 };
@@ -40,14 +50,25 @@ CreepMiner.prototype.act = function() {
 	if (this.creep.energy == this.creep.energyCapacity) {
 		//return;
 	}
-	if (this.creep.pos.getRangeTo(this.container) == 0) { 
-        this.resource = this.creep.pos.findClosestByPath(FIND_SOURCES); 
-        this.creep.harvest(this.resource);
-        this.creep.transfer(this.container, RESOURCE_ENERGY);
-    } 
-    else { 
-        this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#F1C41A', lineStyle: 'solid'}});
-    } 
+	if (this.container) {
+    	if (this.creep.pos.getRangeTo(this.container) == 0) { 
+            this.resource = this.creep.pos.findClosestByPath(FIND_SOURCES); 
+            this.creep.harvest(this.resource);
+            this.creep.transfer(this.container, RESOURCE_ENERGY);
+        } 
+        else { 
+            this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#F1C41A', lineStyle: 'solid'}});
+        }
+	} else {
+	    if (this.creep.pos.getRangeTo(this.resource) == 1) { 
+            this.resource = this.creep.pos.findClosestByPath(FIND_SOURCES); 
+            this.creep.harvest(this.resource);
+        } 
+        else { 
+            this.creep.moveTo(this.resource, {costCallback: avoidArea, visualizePathStyle: {stroke: '#F1C41A', lineStyle: 'solid'}});
+        }
+	}
+	
 	this.remember('last-energy', this.creep.energy);
 }
 

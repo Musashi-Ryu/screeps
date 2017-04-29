@@ -33,6 +33,8 @@ Room.prototype.populate = function() {
                 }
             }
         }
+    }
+};
 
 Room.prototype.loadCreeps = function() {
 	var creeps = this.room.find(FIND_MY_CREEPS);
@@ -43,8 +45,8 @@ Room.prototype.loadCreeps = function() {
 		}
 	}
 	this.distributeConstructors();
-	this.distributeResources('Miner');
-	this.distributeResources('Carrier');
+	//this.distributeResources('Miner');
+	//this.distributeResources('Carrier');
 	this.distributeCarriers();
 };
 
@@ -91,6 +93,7 @@ Room.prototype.distributeCarriers = function() {
 	var carriers = [];
 	for (var i = 0; i < this.creeps.length; i++) {
 		var creep = this.creeps[i];
+	    creep.remember('target-worker', null);
 		if (creep.remember('role') == 'Constructor') {
 			builders.push(creep.creep);
 		}
@@ -121,6 +124,7 @@ Room.prototype.distributeCarriers = function() {
 		}
 		var id = creep.remember('target-worker');
 		if (!Game.getObjectById(id)) {
+		    console.log('setting worker: ' + builders[counter].id);
 			creep.remember('target-worker', builders[counter].id);
 		}
 		counter++;

@@ -24,11 +24,21 @@ function CreepCarrier(creep, depositController, resourceController, construction
 CreepCarrier.prototype.init = function() {
 	this.remember('role', 'Carrier');
 	this.depositFor = this.remember('depositFor') || 2;
+	
 	if (!this.remember('container')) {
 		var containers = this.resourceController.getContainers(this.creep.room);
-	    this.remember('container', containers[Util.getRandomInt(0,1)].id);
+		if (containers.length) {
+	        this.remember('container', containers[Util.getRandomInt(0,1)].id);
+		}
 	} else {
 		this.container = this.resourceController.getResourceById(this.remember('container'));
+	}
+	
+	if (!this.remember('source')) {
+		var sources = this.resourceController.getSources(this.creep.room);
+	    this.remember('source', sources[Util.getRandomInt(0,1)].id);
+	} else {
+		this.resource = this.resourceController.getResourceById(this.remember('source'));
 	}
 	
 	if (!this.remember('srcRoom')) {
@@ -60,7 +70,6 @@ CreepCarrier.prototype.act = function() {
 	if (this.creep.carry.energy != 0 && this.remember('last-action') == ACTIONS.DEPOSIT) {
 		continueDeposit = true;
 	}
-
 	this.pickupEnergy();
 	if (this.creep.carry.energy < this.creep.carryCapacity && continueDeposit == false) {
 		this.harvestEnergy();
@@ -138,12 +147,9 @@ CreepCarrier.prototype.getDeposit = function() {
 
 CreepCarrier.prototype.pickupEnergy = function() {
 	var avoidArea = this.getAvoidedArea();
-	if (this.creep.energy == this.creep.energyCapacity) {
-		return false;
-	}
 
-	var target = this.creep.pos.findInRange(FIND_DROPPED_ENERGY,2, {costCallback: avoidArea});
-	if (target.length) {
+	var target = this.creep.pos.findInRange(FIND_DROPPED_ENERGY, 1);
+	if (target != undefined) {
 	    this.creep.pickup(target[0]);
 	}
 };
@@ -151,12 +157,20 @@ CreepCarrier.prototype.pickupEnergy = function() {
 CreepCarrier.prototype.harvestEnergy = function() {
 	var avoidArea = this.getAvoidedArea();
 
-	
-	if (this.creep.pos.inRangeTo(this.container, 1)) {
-		this.harvest();
+	if (this.container) {
+    	if (this.creep.pos.inRangeTo(this.container, 1)) {
+    		this.harvest();
+    	} else {
+    	    this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
+    	}
 	} else {
-	    this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
+	    if (this.creep.pos.inRangeTo(this.resource, 1)) {
+    		this.harvest();
+    	} else {
+    	    this.creep.moveTo(this.resource, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
+    	}
 	}
+	
 	this.remember('last-action', ACTIONS.HARVEST);
 	this.forget('closest-deposit');
 };

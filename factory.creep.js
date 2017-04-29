@@ -60,13 +60,13 @@ FactoryCreep.prototype.new = function(creepType, spawn) {
 	switch(creepType) {
 		case 'Miner':
 			if (level <= 1) {
-				abilities = [WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, MOVE];
 			} else
 			if (level <= 2) {
-				abilities = [WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, MOVE];
 			} else
 			if (level <= 3) {
-				abilities = [WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 4) {
 				abilities = [WORK, WORK, WORK, WORK, MOVE];

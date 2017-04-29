@@ -8,9 +8,14 @@ function ControllerResource(room, population) {
 
 ControllerResource.prototype.getAvailableResource = function() {
 	var srcs = this.getSources(this.room);
-	var srcIndex = Math.floor(Math.random()*srcs.length);
-
-	return srcs[1];
+	var freeSource = [];
+	for (var s of srcs) {
+        var creepsNear = s.pos.findInRange(FIND_MY_CREEPS, 1);
+        if (creepsNear.length == 0) {
+            freeSource.push(s);
+        }
+	}
+	return freeSource[0];
 };
 
 ControllerResource.prototype.getSources = function(room) {
