@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var Cache = require('cache');
 
 function Population(room) {
@@ -61,30 +60,3 @@ Population.prototype.getMaxPopulation = function() {
 };
 
 module.exports = Population;
-=======
-var population = {
-    harvesters: function() {
-        return [
-            "harvester1",
-            "harvester2",
-            "harvester3"
-            ];
-    },
-    upgraders: function() {
-        return [
-            "upgrader1",
-            "upgrader2",
-            "upgrader3"
-            ];
-    },
-    builders: function() {
-        return [
-            "builder1",
-            "builder2",
-            "builder3"
-            ];
-    }
-};
-
-module.exports = population;
->>>>>>> ad599f6b484c63a0589191d1dfc5994105439abc
