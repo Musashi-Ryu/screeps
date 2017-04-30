@@ -4,10 +4,11 @@ var CreepMiner = require('creep.miner');
 var CreepCarrier = require('creep.carrier');
 var CreepConstructor = require('creep.constructor');
 
-function FactoryCreep(depositController, resourceController, constructionController, population) {
+function FactoryCreep(depositController, resourceController, constructionController, towerController, population) {
 	this.depositController = depositController;
 	this.resourceController = resourceController;
 	this.constructionController = constructionController;
+	this.towerController = towerController;
 	this.population = population;
 };
 
@@ -26,7 +27,7 @@ FactoryCreep.prototype.load = function(creep) {
 			loadedCreep = new CreepMiner(creep, this.resourceController);
 		break;
 		case 'Carrier':
-			loadedCreep = new CreepCarrier(creep, this.depositController, this.resourceController, this.constructionController);
+			loadedCreep = new CreepCarrier(creep, this.depositController, this.resourceController, this.constructionController, this.towerController);
 		break;
 	}
 
