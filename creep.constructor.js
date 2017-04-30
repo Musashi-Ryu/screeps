@@ -31,11 +31,8 @@ CreepConstructor.prototype.act = function() {
 	
 	if (!site) {
 		var site = this.constructionController.getController();
-		if (this.creep.pos.findInRange(site, 3)) {
-		    this.creep.upgradeController(site);
-		} else {
-		    this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
-		}
+        this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
+        this.creep.upgradeController(site);
 	}
 
 	if (this.creep.pos.inRangeTo(site, 3)) {

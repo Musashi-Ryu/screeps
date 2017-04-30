@@ -15,7 +15,6 @@ function CreepMiner(creep, resourceController) {
 
 CreepMiner.prototype.init = function() {
 	this.remember('role', 'Miner');
-	
 	if (!this.remember('container')) {
 		var cnt = this.resourceController.getAvailableContainer();
 		if (cnt != undefined) {
@@ -25,7 +24,7 @@ CreepMiner.prototype.init = function() {
 	    this.container = this.resourceController.getResourceById(this.remember('container'));
 	}
 	
-	if (this.remember('source') == undefined) {
+	if (this.remember('source') == undefined || this.remember('source') == null) {
 		var source = this.resourceController.getAvailableResource();
 		if (source != undefined) {
 		    this.remember('source', source.id);
@@ -50,7 +49,7 @@ CreepMiner.prototype.act = function() {
 	if (this.creep.energy == this.creep.energyCapacity) {
 		//return;
 	}
-	if (this.container) {
+	if (this.container && this.creep.pos.getRangeTo(this.resource) != 1) {
     	if (this.creep.pos.getRangeTo(this.container) == 0) { 
             this.resource = this.creep.pos.findClosestByPath(FIND_SOURCES); 
             this.creep.harvest(this.resource);

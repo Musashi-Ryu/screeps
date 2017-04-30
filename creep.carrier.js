@@ -106,7 +106,11 @@ CreepCarrier.prototype.depositEnergy = function() {
 		} else {
 			this.remember('move-attempts', 0);
 		}
-		this.harvest();
+		if (worker.structureType == 'tower') {
+		    this.creep.transfer(worker, RESOURCE_ENERGY);
+		} else {
+		    this.harvest();
+		}
 	}
 
 	this.remember('last-action', ACTIONS.DEPOSIT);
@@ -148,9 +152,11 @@ CreepCarrier.prototype.getDeposit = function() {
 CreepCarrier.prototype.pickupEnergy = function() {
 	var avoidArea = this.getAvoidedArea();
 
-	var target = this.creep.pos.findInRange(FIND_DROPPED_ENERGY, 1);
+	var target = this.creep.pos.findInRange(FIND_DROPPED_ENERGY, 2);
 	if (target != undefined) {
-	    this.creep.pickup(target[0]);
+	    if (this.creep.pickup(target[0]) == ERR_NOT_IN_RANGE) {
+	        this.creep.moveTo(target[0], {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
+	    }
 	}
 };
 
@@ -164,7 +170,7 @@ CreepCarrier.prototype.harvestEnergy = function() {
     	    this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
     	}
 	} else {
-	    if (this.creep.pos.inRangeTo(this.resource, 1)) {
+	    if (this.creep.pos.inRangeTo(this.resource, 2)) {
     		this.harvest();
     	} else {
     	    this.creep.moveTo(this.resource, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'dashed'}});
@@ -190,6 +196,7 @@ CreepCarrier.prototype.harvest = function() {
     			}
     		}
     	}
+    	
 	}
 };
 

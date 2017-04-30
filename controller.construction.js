@@ -16,14 +16,15 @@ ControllerConstruction.prototype.getDamagedStructures = function() {
         'damaged-structures',
         function() {
             return this.room.find(
-                FIND_MY_STRUCTURES,
+                FIND_STRUCTURES,
                 {
                     filter: function(s) {
                         var targets = s.pos.findInRange(FIND_HOSTILE_CREEPS, 3);
 						if (targets.length != 0) {
 						    return false;
 						}
-                        if (s.hits < s.hitsMax/2 && s.structureType != STRUCTURE_RAMPART) {
+                        if (s.hits < (s.hitsMax - s.hitsMax / 10) && s.structureType != STRUCTURE_RAMPART 
+                                && s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_WALL) {
                             return true;
                         }
                     }
@@ -69,6 +70,11 @@ ControllerConstruction.prototype.getClosestConstructionSite = function(creep) {
 };
 
 ControllerConstruction.prototype.constructStructure = function(creep) {
+    this.sites = this.room.find(FIND_CONSTRUCTION_SITES);
+    this.structures = this.room.find(FIND_MY_STRUCTURES);
+    this.damagedStructures = this.getDamagedStructures();
+    this.upgradeableStructures = this.getUpgradeableStructures();
+    
     var avoidArea = creep.getAvoidedArea();
     var site = false;
     

@@ -58,7 +58,7 @@ Room.prototype.distributeConstructors = function() {
 			if (creep.remember('role') != 'Constructor') {
 				continue;
 			}
-
+            
 			creep.remember('forceControllerUpgrade', false);
 		}
 		return;
@@ -124,11 +124,11 @@ Room.prototype.distributeCarriers = function() {
 		}
 		var id = creep.remember('target-worker');
 		if (!Game.getObjectById(id)) {
-		    console.log('setting worker: ' + builders[counter].id);
 			creep.remember('target-worker', builders[counter].id);
 		}
 		counter++;
 		if (counter >= builders.length) {
+		    creep.remember('target-worker', '590514c03031099b2191e29b');
 			counter = 0;
 		}
 	}

@@ -63,25 +63,25 @@ FactoryCreep.prototype.new = function(creepType, spawn) {
 				abilities = [WORK, WORK, MOVE];
 			} else
 			if (level <= 2) {
-				abilities = [WORK, WORK, MOVE];
-			} else
-			if (level <= 3) {
 				abilities = [WORK, WORK, WORK, MOVE];
 			} else
-			if (level <= 4) {
+			if (level <= 3) {
 				abilities = [WORK, WORK, WORK, WORK, MOVE];
+			} else
+			if (level <= 4) {
+				abilities = [WORK, WORK, WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 5) {
-				abilities = [WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 6) {
-				abilities = [WORK, WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 7) {
-				abilities = [WORK, WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 8) {
-				abilities = [WORK, WORK, WORK, WORK, WORK, WORK, MOVE];
+				abilities = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE];
 			} else
 			if (level <= 9) {
 				abilities = [WORK, WORK, WORK, WORK, WORK, WORK, WORK, MOVE];

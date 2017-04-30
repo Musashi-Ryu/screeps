@@ -10,7 +10,11 @@ ControllerResource.prototype.getAvailableResource = function() {
 	var srcs = this.getSources(this.room);
 	var freeSource = [];
 	for (var s of srcs) {
-        var creepsNear = s.pos.findInRange(FIND_MY_CREEPS, 1);
+       var creepsNear = s.pos.findInRange(FIND_MY_CREEPS, 1, {
+				filter: function(creep) {
+					return (creep.memory.role == 'Miner');
+				}
+			});
         if (creepsNear.length == 0) {
             freeSource.push(s);
         }
@@ -40,7 +44,11 @@ ControllerResource.prototype.getAvailableContainer = function() {
 	var conts = this.getContainers(this.room);
 	var freeConts = [];
 	for (var c of conts) {
-        var creepsNear = c.pos.findInRange(FIND_MY_CREEPS, 0);
+        var creepsNear = c.pos.findInRange(FIND_MY_CREEPS, 0, {
+				filter: function(creep) {
+					return (creep.memory.role == 'Miner');
+				}
+			});
         if (creepsNear.length == 0) {
             freeConts.push(c);
         }
