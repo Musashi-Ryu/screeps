@@ -2,7 +2,8 @@ var Population = require('population');
 var ControllerDeposit = require('controller.deposit');
 var ControllerResource = require('controller.resource');
 var ControllerConstruction = require('controller.construction');
-var FactoryCreep = require('factory.creep')
+var FactoryCreep = require('factory.creep');
+var StructureTower = require('structure.tower');
 
 function Room(room)  {
     this.room = room;
@@ -11,7 +12,8 @@ function Room(room)  {
     this.depositController = new ControllerDeposit(this.room);
     this.resourceController = new ControllerResource(this.room, this.population);
     this.constructionController = new ControllerConstruction(this.room);
-    this.creepFactory = new FactoryCreep(this.depositController, this.resourceController, this.constructionController, this.population);
+    this.towerController = new StructureTower(this.room);
+    this.creepFactory = new FactoryCreep(this.depositController, this.resourceController, this.constructionController, this.towerController, this.population);
 };
 
 Room.prototype.populate = function() {
@@ -48,6 +50,10 @@ Room.prototype.loadCreeps = function() {
 	//this.distributeResources('Miner');
 	//this.distributeResources('Carrier');
 	this.distributeCarriers();
+};
+
+Room.prototype.activateTowers = function() {
+    this.towerController.init();
 };
 
 Room.prototype.distributeConstructors = function() {

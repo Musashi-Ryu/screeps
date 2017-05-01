@@ -18,7 +18,7 @@ StructureTower.prototype.act = function() {
 StructureTower.prototype.repairAll = function() {
     for (t of this.towers) {
         var closestDamagedStructure = t.pos.findClosestByRange(FIND_STRUCTURES, {
-            filter: (structure) => structure.hits < structure.hitsMax
+            filter: (structure) => structure.hits < structure.hitsMax / 4 && structure.structureType != STRUCTURE_WALL
         });
         if(closestDamagedStructure) {
             t.repair(closestDamagedStructure);
