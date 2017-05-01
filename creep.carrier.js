@@ -10,13 +10,12 @@ var DEPOSIT_FOR = {
 	POPULATION: 2
 }
 
-function CreepCarrier(creep, depositController, resourceController, constructionsController, towerController) {
+function CreepCarrier(creep, depositController, resourceController, constructionsController) {
 	this.cache = new Cache();
 	this.creep = creep;
 	this.depositController = depositController;
 	this.resourceController = resourceController;
 	this.constructionsController = constructionsController;
-	this.towerController = towerController;
 	this.resource = false;
 	this.target = false;
 	this.container = false;
@@ -97,16 +96,10 @@ CreepCarrier.prototype.depositEnergy = function() {
 	if (this.depositFor == DEPOSIT_FOR.CONSTRUCTION) {
 		var worker = this.getWorker();
 		var range = 1;
-		var towers = this.towerController.getTowersLowEnergy();
-		if (!worker && (towers.length == 0)) {
+		if (!worker) {
 			worker = this.constructionsController.controller;
 			range = 2;
-		} else {
-		    var rand = Util.getRandomInt(0,towers.length - 1);
-		    worker = towers[rand];
-		    range = 1;
 		}
-		
 
 		if (!this.creep.pos.isNearTo(worker, range)) {
 			this.creep.moveTo(worker, {costCallback: avoidArea, visualizePathStyle: {stroke: '#3B96D4', lineStyle: 'solid'}});
