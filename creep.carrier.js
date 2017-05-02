@@ -28,7 +28,11 @@ CreepCarrier.prototype.init = function() {
 	if (!this.remember('container')) {
 		var containers = this.resourceController.getContainers(this.creep.room);
 		if (containers.length) {
-	        this.remember('container', containers[Util.getRandomInt(0,1)].id);
+		    var rand = Util.getRandomInt(0,1);
+		    var container = containers[rand];
+		    if (this.resourceController.hasMiner(container) && !this.resourceController.isEmpty(container)) {
+	            this.remember('container', container.id);
+		    }
 		}
 	} else {
 		this.container = this.resourceController.getResourceById(this.remember('container'));

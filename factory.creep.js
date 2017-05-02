@@ -170,12 +170,8 @@ FactoryCreep.prototype.new = function(creepType, spawn) {
 	}
 	
 	console.log('Spawn level ' + level + ' ' + creepType + '(' + creepLevel + '/' + resourceLevel + ')');
-	if (creepType == 'Miner' || creepType == 'Carrier') {
-		var i = this.population.getType(creepType).count % 2;
-		spawn.createCreep(abilities, creepType + '-' + id, {role: creepType, containerNo: i});
-	} else {		
-		spawn.createCreep(abilities, creepType + '-' + id, {role: creepType});
-	}
+    spawn.createCreep(abilities, creepType + '-' + id, {role: creepType});
+
 };
 
 module.exports = FactoryCreep;

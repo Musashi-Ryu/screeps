@@ -49,7 +49,7 @@ CreepMiner.prototype.act = function() {
 	if (this.creep.energy == this.creep.energyCapacity) {
 		//return;
 	}
-	if (this.container && this.creep.pos.getRangeTo(this.resource) != 1) {
+	if (this.container) {
     	if (this.creep.pos.getRangeTo(this.container) == 0) { 
             this.resource = this.creep.pos.findClosestByPath(FIND_SOURCES); 
             this.creep.harvest(this.resource);

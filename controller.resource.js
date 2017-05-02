@@ -69,6 +69,17 @@ ControllerResource.prototype.getContainers = function(room) {
 	);
 };
 
+ControllerResource.prototype.isEmpty = function(container) {
+    return container.energy > 0;
+};
+
+ControllerResource.prototype.hasMiner = function(container) {
+    var creeps = this.room.find(FIND_MY_CREEPS, { filter: function(c) {
+        c.memory.role == 'Miner';
+    }});
+    return container.pos.findInRange(creeps, 0);
+}
+
 ControllerResource.prototype.getResourceById = function(id) {
 	return Game.getObjectById(id);
 };
