@@ -39,16 +39,14 @@ Room.prototype.populate = function() {
 };
 
 Room.prototype.loadCreeps = function() {
-	var creeps = this.room.find(FIND_MY_CREEPS);
+    var creeps = this.room.find(FIND_MY_CREEPS);
 	for (var n in creeps) {
-		var c = this.creepFactory.load(creeps[n]);
+	var c = this.creepFactory.load(creeps[n]);
 		if (c) {
 			this.creeps.push(c);
 		}
 	}
 	this.distributeConstructors();
-	//this.distributeResources('Miner');
-	//this.distributeResources('Carrier');
 	this.distributeCarriers();
 };
 
@@ -135,7 +133,7 @@ Room.prototype.distributeCarriers = function() {
 		counter++;
 		if (counter >= builders.length) {
 		    creep.remember('target-worker', '590514c03031099b2191e29b');
-			counter = 0;
+			//counter = 0;
 		}
 	}
 };

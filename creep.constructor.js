@@ -31,14 +31,30 @@ CreepConstructor.prototype.act = function() {
 	
 	if (!site) {
 		var site = this.constructionController.getController();
-        this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
-        this.creep.upgradeController(site);
+		var storage = site.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+		    filter: function(s) {
+                return s.structureType == STRUCTURE_STORAGE;
+            }
+		});
+        this.creep.moveTo(storage, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
+        if (this.creep.carry.energy == 0) {
+            this.getEnergyFromStorage(storage);
+        } else {
+            if (this.creep.upgradeController(site) == ERR_NOT_IN_RANGE) {
+                this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
+            }
+            
+        }
 	}
 
 	if (this.creep.pos.inRangeTo(site, 3)) {
 		this.giveEnergy(site);
 	}
 	this.remember('last-energy', this.creep.energy);
+};
+
+CreepConstructor.prototype.getEnergyFromStorage = function(storage) {
+    this.creep.withdraw(storage, RESOURCE_ENERGY);
 };
 
 CreepConstructor.prototype.giveEnergy = function(site) {
@@ -66,6 +82,6 @@ CreepConstructor.prototype.giveEnergy = function(site) {
 			}
 		}
 	}
-}
+};
 
 module.exports = CreepConstructor;

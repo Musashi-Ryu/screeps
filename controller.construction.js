@@ -60,6 +60,22 @@ ControllerConstruction.prototype.getController = function() {
     return this.controller;
 };
 
+ControllerConstruction.prototype.getStorage = function() {
+    return this.room.find(FIND_MY_STRUCTURES, { filter: function(s) {
+        return s.structureType == STRUCTURE_STORAGE;
+    }});
+};
+
+ControllerConstruction.prototype.getEmptyStorage = function() {
+    var storages = this.getStorage();
+    for (var storage of storages) {
+        if (storage.store[RESOURCE_ENERGY] < storage.storeCapacity) {
+            return storage;
+        }
+    }
+    return false;
+};
+
 ControllerConstruction.prototype.getClosestConstructionSite = function(creep) {
     var site = false;
     if (this.sites.length != 0) {
