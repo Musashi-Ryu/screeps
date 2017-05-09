@@ -22,12 +22,11 @@ Room.prototype.populate = function() {
         if (spawn.spawning) {
             continue;
         }
-        
         if ((this.depositController.energy() / this.depositController.energyCapacity()) > 0.2) {
             var types = this.population.getTypes();
             for (var i = 0; i < types.length; i++) {
                 var ctype = this.population.getType(types[i]);
-                if (this.depositController.deposits.length > ctype.minExtensions) {
+                if (this.depositController.deposits.length >= ctype.minExtensions) {
                     if (ctype.count < ctype.max || ctype.count == 0) {
                         this.creepFactory.new(types[i], this.depositController.getSpawnDeposit());
                         break;
@@ -95,6 +94,7 @@ Room.prototype.distributeCarriers = function() {
 	var counter = 0;
 	var builders = [];
 	var carriers = [];
+	var towers = this.towerController.getTowersLowEnergy();
 	for (var i = 0; i < this.creeps.length; i++) {
 		var creep = this.creeps[i];
 	    creep.remember('target-worker', null);
@@ -132,7 +132,9 @@ Room.prototype.distributeCarriers = function() {
 		}
 		counter++;
 		if (counter >= builders.length) {
-		    creep.remember('target-worker', '590514c03031099b2191e29b');
+		    for (var t of towers) {
+		        creep.remember('target-worker', t.id);
+		    }
 			//counter = 0;
 		}
 	}

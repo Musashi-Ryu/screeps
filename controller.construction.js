@@ -39,14 +39,15 @@ ControllerConstruction.prototype.getUpgradeableStructures = function() {
         'upgradeable-structures',
         function() {
             return this.room.find(
-                FIND_MY_STRUCTURES,
+                FIND_STRUCTURES,
                 {
                     filter: function(s) {
                         var targets = s.pos.findInRange(FIND_HOSTILE_CREEPS, 3);
                         if(targets.length != 0) {
                             return false;
                         }
-                        if(s.hits < s.hitsMax && s.structureType != STRUCTURE_RAMPART) {
+                        if(s.hits < s.hitsMax && s.structureType != STRUCTURE_ROAD 
+                                                && s.structureType != STRUCTURE_CONTAINER) {
                             return true;
                         }
                     }
@@ -109,8 +110,9 @@ ControllerConstruction.prototype.constructStructure = function(creep) {
 
         return site;
     }
-
+    
     if(this.upgradeableStructures.length != 0) {
+        //findlowesthp
         site = creep.creep.pos.findClosestByPath(this.upgradeableStructures);
         creep.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'solid'}});
         creep.creep.repair(site);

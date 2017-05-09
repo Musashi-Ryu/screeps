@@ -17,7 +17,7 @@ function Population(room) {
         },
         Constructor: {
             count: 0,
-            max: 6,
+            max: 12,
             minExtensions: 0
         }
     };

@@ -47,7 +47,7 @@ CreepConstructor.prototype.act = function() {
         }
 	}
 
-	if (this.creep.pos.inRangeTo(site, 3)) {
+	if (this.creep.pos.inRangeTo(site, 2)) {
 		this.giveEnergy(site);
 	}
 	this.remember('last-energy', this.creep.energy);

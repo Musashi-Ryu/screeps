@@ -44,12 +44,13 @@ ControllerResource.prototype.getAvailableContainer = function() {
 	var conts = this.getContainers(this.room);
 	var freeConts = [];
 	for (var c of conts) {
+	    var sourcesNear = c.pos.findInRange(FIND_SOURCES, 1);
         var creepsNear = c.pos.findInRange(FIND_MY_CREEPS, 0, {
 				filter: function(creep) {
 					return (creep.memory.role == 'Miner');
 				}
 			});
-        if (creepsNear.length == 0) {
+        if (creepsNear.length == 0 && sourcesNear.length == 1) {
             freeConts.push(c);
         }
 	}

@@ -2,7 +2,7 @@ var Room = require('room');
 var Util = require('util');
 
 module.exports.loop = function () {
-    var room = new Room(Game.rooms['E18N81']);
+    var room = new Room(Game.rooms['W36N97']);
     room.loadCreeps();
     room.populate();
     room.activateTowers();

@@ -1,4 +1,6 @@
 var Cache = require('cache');
+var Util = require('util');
+var CreepBase = require('creep.base');
 
 var ACTIONS = {
 	HARVEST: 1,
@@ -55,7 +57,13 @@ CreepMiner.prototype.act = function() {
             this.creep.harvest(this.resource);
             this.creep.transfer(this.container, RESOURCE_ENERGY);
         } 
-        else { 
+        else {
+            Util.extend(this.creep, CreepBase);
+            var direction = this.creep.pos.getDirectionTo(this.container);
+            var creep = this.creep.getCreepAt(this.creep, direction);
+            if (creep) {
+                this.creep.swapPosition(this.creep, creep);
+            }
             this.creep.moveTo(this.container, {costCallback: avoidArea, visualizePathStyle: {stroke: '#F1C41A', lineStyle: 'solid'}});
         }
 	} else {

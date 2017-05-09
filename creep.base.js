@@ -139,4 +139,64 @@ CreepBase.moveToNewRoom = function() {
 	}
 };
 
+CreepBase.swapPosition = function(creep1, creep2) {
+    //why no swap??
+    var pos1 = creep1.pos;
+    var pos2 = creep2.pos;
+    
+            console.log(creep1.name);
+            console.log(creep2.name);
+            console.log(pos1);
+            console.log(pos2);
+    creep2.moveTo(pos1);
+    creep1.moveTo(pos2);
+    creep2.moveTo(pos1);
+};
+
+CreepBase.getCreepAt = function(creep, direction) {
+    var targetPos = false;
+    var found = [];
+    
+    switch(direction) {
+        case TOP:
+                targetPos = new RoomPosition(creep.pos.x, creep.pos.y - 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case TOP_RIGHT:
+                targetPos = new RoomPosition(creep.pos.x + 1, creep.pos.y - 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case RIGHT:
+                targetPos = new RoomPosition(creep.pos.x + 1, creep.pos.y, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case BOTTOM_RIGHT:
+                targetPos = new RoomPosition(creep.pos.x + 1, creep.pos.y + 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case BOTTOM:
+                targetPos = new RoomPosition(creep.pos.x, creep.pos.y + 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case BOTTOM_LEFT:
+                targetPos = new RoomPosition(creep.pos.x - 1, creep.pos.y + 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case LEFT:
+                targetPos = new RoomPosition(creep.pos.x - 1, creep.pos.y, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+        case TOP_LEFT:
+                targetPos = new RoomPosition(creep.pos.x - 1, creep.pos.y - 1, creep.room.name);
+                found = creep.room.lookForAt(LOOK_CREEPS, targetPos);
+            break;
+    }
+    if (found.length) {
+        return found[0];
+    }
+    else {
+        return false;
+    }
+};
+
 module.exports = CreepBase;
