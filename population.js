@@ -12,12 +12,12 @@ function Population(room) {
         },
         Carrier: {
             count: 0,
-            max: 12,
+            max: 10,
             minExtensions: 0
         },
         Constructor: {
             count: 0,
-            max: 12,
+            max: 10,
             minExtensions: 0
         }
     };

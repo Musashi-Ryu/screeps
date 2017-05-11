@@ -83,7 +83,7 @@ Room.prototype.distributeConstructors = function() {
 			}
 			creep.remember('forceControllerUpgrade', true);
 			c++;
-			if (c == 2) {
+			if (c == 5) {
 				break;
 			}
 		}

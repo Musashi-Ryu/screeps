@@ -24,7 +24,7 @@ ControllerConstruction.prototype.getDamagedStructures = function() {
 						    return false;
 						}
                         if (s.hits < (s.hitsMax - s.hitsMax / 10) && s.structureType != STRUCTURE_RAMPART 
-                                && s.structureType != STRUCTURE_ROAD && s.structureType != STRUCTURE_WALL) {
+                                && s.structureType != STRUCTURE_WALL) {
                             return true;
                         }
                     }

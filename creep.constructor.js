@@ -40,14 +40,14 @@ CreepConstructor.prototype.act = function() {
         if (this.creep.carry.energy == 0) {
             this.getEnergyFromStorage(storage);
         } else {
-            if (this.creep.upgradeController(site) == ERR_NOT_IN_RANGE) {
+            if (this.creep.upgradeController(site) == ERR_NOT_IN_RANGE || this.creep.pos.getRangeTo(site) > 2) {
                 this.creep.moveTo(site, {costCallback: avoidArea, visualizePathStyle: {stroke: '#4EB970', lineStyle: 'dashed'}});
             }
             
         }
 	}
 
-	if (this.creep.pos.inRangeTo(site, 2)) {
+	if (this.creep.pos.inRangeTo(site, 3)) {
 		this.giveEnergy(site);
 	}
 	this.remember('last-energy', this.creep.energy);
